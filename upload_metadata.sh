@@ -25,4 +25,16 @@ echo "Operating System: $OS_NAME $OS_VERSION" >> $OUTPUT_FILE
 echo "Users with Shell Access:" >> $OUTPUT_FILE
 echo "$USERS" >> $OUTPUT_FILE
 
+# Upload to S3
+S3_BUCKET="s3://applicant-task/r5d4/"
+AWS_ROLE="r5d4-role"
 
+# Use IAM role to upload file
+aws s3 cp $OUTPUT_FILE $S3_BUCKET
+
+# Check if upload was successful
+if [ $? -eq 0 ]; then
+    echo "File successfully uploaded to S3."
+else
+    echo "File upload failed."
+fi
